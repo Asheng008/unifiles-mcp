@@ -13,6 +13,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.1.3] - 2026-02-07
+
+### Added
+- 命令行入口：`[project.scripts]` 配置 `unifiles-mcp = "unifiles_mcp.main:run"`，安装后可直接执行 `unifiles-mcp`
+- 发布脚本：`publish_pypi.bat`，支持 `publish_pypi.bat test`（TestPyPI）与无参数（正式 PyPI）
+- PyPI 发布清单：`docs/PYPI_RELEASE_CHECKLIST.md`，含已就绪项、必做步骤、可选改进与快速发布命令
+- Cursor 命令：`publish-to-pypi.md`，指导打包与上传到 TestPyPI/正式 PyPI
+- 根目录 `LICENSE` 文件（MIT，Copyright unifiles-mcp contributors）
+
+### Changed
+- **pyproject.toml**：补充作者（Asheng）、`license-files`、classifiers（Topic）、`[project.urls]`；`license` 改为字符串 `"MIT"`、`dependencies` 移回 `[project]` 下以通过 build；移除与 PEP 639 冲突的 License classifier
+- **README.md**：安装方式与 unifiles 对齐（开发/仅运行/锁文件/PyPI）；作者与维护者小节、许可证链接；快速开始补充 CLI 启动方式及正确包导入（`from unifiles_mcp.main import mcp`）；项目结构增加 LICENSE、publish_pypi.bat、docs/PYPI_RELEASE_CHECKLIST.md；文档链接增加 PyPI 发布清单、移除不存在的 CODE_REVIEW_REPORT.md
+- **write-cursor-command SKILL**：已有命令列表与 `.cursor/commands/` 同步，新增 explain、publish-to-pypi、update-changelog 说明，补充「新增命令后建议同步更新本列表」
+
+---
+
 ## [0.1.2] - 2026-02-07
 
 ### Fixed

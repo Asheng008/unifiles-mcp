@@ -63,4 +63,5 @@ tests/fixtures/test_files/*.db
 tests/fixtures/test_files/*.sqlite
 
 AGENTS.md.bak*
+.cursor/mcp.json.bak*
 temp/

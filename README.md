@@ -21,28 +21,29 @@ MCP server for [unifiles](https://github.com/Asheng008/unifiles) - unified file 
 
 ## 安装
 
-### 从源码安装（开发模式）
+从源码安装（开发模式，含测试与类型检查等依赖）：
 
 ```powershell
-# 克隆仓库
-git clone <repository-url>
+git clone https://github.com/Asheng008/unifiles-mcp.git
 cd unifiles-mcp
-
-# 创建虚拟环境
 python -m venv .venv
-
-# 激活虚拟环境（Windows PowerShell）
 .\.venv\Scripts\Activate.ps1
+pip install -e ".[dev]"
+```
 
-# 安装依赖
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
+仅安装运行依赖：
 
-# 安装项目（开发模式）
+```powershell
 pip install -e .
 ```
 
-### 从 PyPI 安装（待发布）
+使用依赖锁文件安装（推荐用于生产环境）：
+
+```powershell
+pip install -r requirements.txt
+```
+
+若已发布到 PyPI：
 
 ```bash
 pip install unifiles-mcp
@@ -52,8 +53,16 @@ pip install unifiles-mcp
 
 ### 启动服务器
 
+安装后可在终端直接运行：
+
+```bash
+unifiles-mcp
+```
+
+或从代码启动：
+
 ```python
-from src.unifiles_mcp.main import mcp
+from unifiles_mcp.main import mcp
 
 if __name__ == "__main__":
     mcp.run()
@@ -196,12 +205,15 @@ unifiles-mcp/
 │           └── validators.py
 ├── docs/                       # 文档
 │   ├── API.md                  # API 文档
+│   ├── PYPI_RELEASE_CHECKLIST.md
 │   └── README.md
 ├── .cursor/                    # Cursor IDE 配置
 │   ├── commands/               # Cursor 命令
 │   ├── rules/                  # 项目规则
 │   ├── skills/                 # Cursor Skills
 │   └── mcp.json                # MCP 配置
+├── LICENSE                     # MIT 许可证
+├── publish_pypi.bat           # 一键发布到 PyPI 脚本
 ├── requirements.txt            # 生产依赖
 ├── requirements-dev.txt        # 开发依赖（可选）
 ├── pyproject.toml              # 项目配置
@@ -214,21 +226,23 @@ unifiles-mcp/
 ## 文档
 
 - [API 文档](./docs/API.md) - 详细的工具 API 说明和使用示例
+- [PyPI 发布清单](./docs/PYPI_RELEASE_CHECKLIST.md) - 发布到 PyPI 前的检查与步骤
 - [技术需求文档](./TRD.md) - 项目技术需求
 - [API 设计文档](./API_DESIGN.md) - API 设计方案
 - [API 设计评审](./API_DESIGN_REVIEW.md) - API 设计评审文档
 - [开发规范](./AGENTS.md) - AI Agent 开发规范
-- [代码审查报告](./CODE_REVIEW_REPORT.md) - 代码审查报告
 - [更新日志](./CHANGELOG.md) - 版本变更记录
 - [历史记录](./HISTORY.md) - 对话与变更历史
 
+## 作者与维护者
+
+- **作者**：Asheng (`w62745@qq.com`)
+- **仓库**：[https://github.com/Asheng008/unifiles-mcp](https://github.com/Asheng008/unifiles-mcp)
+- 欢迎通过 Issues 或 Pull Request 参与贡献。
+
 ## 许可证
 
-MIT License
-
-## 贡献
-
-欢迎通过 Issues 或 Pull Request 参与贡献！
+本项目采用 [MIT License](./LICENSE)。
 
 ## 相关项目
 

@@ -17,5 +17,10 @@ async def ping() -> str:
     return "pong"
 
 
-if __name__ == "__main__":
+def run() -> None:
+    """Entry point for console_scripts. Starts the MCP server."""
     mcp.run()
+
+
+if __name__ == "__main__":
+    run()

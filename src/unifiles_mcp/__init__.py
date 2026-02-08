@@ -3,4 +3,4 @@
 Provides unified file operations through Model Context Protocol.
 """
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"

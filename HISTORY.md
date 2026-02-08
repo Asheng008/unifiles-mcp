@@ -205,6 +205,130 @@
 
 ---
 
+## PyPI 发布准备与文档/命令完善
+
+### 26. 补全 pyproject.toml 与 README
+> @pyproject.toml @README.md  这两个文件缺的一些信息，可以参考 https://github.com/Asheng008/unifiles 这个项目，unifiles 这个项目是我开发的
+
+**执行结果**:
+- **pyproject.toml**：补充 `license-files`、作者 Asheng、classifiers（Topic）、`[project.urls]`（Homepage/Documentation/Repository/Issues）；`dependencies` 移回 `[project]` 下。
+- **README.md**：安装方式与 unifiles 对齐（开发/仅运行/锁文件/PyPI）、克隆地址、作者与维护者小节、许可证链接；贡献合并进作者小节。
+- 修改文件：`pyproject.toml`、`README.md`。
+
+### 27. 添加 LICENSE 文件
+> @README.md:234  LICENSE参考 https://github.com/Asheng008/unifiles  的 LICENSE
+
+**执行结果**:
+- 按 unifiles 的 LICENSE 在项目根目录新增 `LICENSE`（MIT，Copyright (c) 2026 unifiles-mcp contributors）。
+- README 中「本项目采用 [MIT License](./LICENSE)。」链接生效。
+
+### 28. 检查发布 PyPI 还差哪些
+> 检查一下 本项目距离发布pypi 还差哪些
+
+**执行结果**:
+- 执行 `python -m build` 发现并修复：`license` 改为字符串 `"MIT"`、`dependencies` 移出 `[project.urls]`、移除 License classifier（PEP 639）。
+- 新建 `docs/PYPI_RELEASE_CHECKLIST.md`：已就绪项、发布前必做（PyPI 账号/Token、twine）、可选改进、已修复说明、快速发布命令。
+- 构建通过，生成 sdist 与 wheel。
+
+### 29. 添加命令行入口
+> @docs/PYPI_RELEASE_CHECKLIST.md:50 添加这个入口
+
+**执行结果**:
+- `pyproject.toml` 增加 `[project.scripts]`：`unifiles-mcp = "unifiles_mcp.main:run"`。
+- `main.py` 增加 `run()`、`if __name__ == "__main__": run()`。
+- 安装后可直接执行 `unifiles-mcp`。
+- 修改文件：`pyproject.toml`、`src/unifiles_mcp/main.py`。
+
+### 30. 编写发布脚本
+> @docs/PYPI_RELEASE_CHECKLIST.md:51 写个发布脚本吧
+
+**执行结果**:
+- 新建 `publish_pypi.bat`（参考 unifiles）：支持 `publish_pypi.bat test`（TestPyPI）与无参数（正式 PyPI），步骤为升级 build/twine、清理 dist、构建、上传。
+- 清单中「发布脚本」标为已实现，快速发布汇总增加「方式一：使用发布脚本」。
+
+### 31. 恢复 PYPI_RELEASE_CHECKLIST.md
+> 我好像误操作，清空了 PYPI_RELEASE_CHECKLIST.md
+
+**执行结果**:
+- 按此前版本完整恢复 `docs/PYPI_RELEASE_CHECKLIST.md`（已就绪项、必做、可选、已修复、快速发布命令等）。
+
+### 32. 编写 publish-to-pypi 命令
+> 参照 D:\git_project\01-MyProject\unifiles-series\unifiles\.cursor\commands\publish-to-pypi.md 这个文件，写个cursor 命令
+
+**执行结果**:
+- 新建 `.cursor/commands/publish-to-pypi.md`：目标、使用方式（/publish-to-pypi test 或 prod）、前置条件、发布步骤（虚拟环境、build、twine）、错误处理、验证链接与安装命令；包名与产物名为 unifiles-mcp，并注明可替代运行 `publish_pypi.bat`。
+
+### 33. 执行 publish-to-pypi test
+> /publish-to-pypi  test
+
+**执行结果**:
+- 前置检查通过；构建成功（dist 内 sdist + wheel）；twine 上传因本机控制台 Unicode（rich 进度条）报错中断；说明需在终端手动执行 `twine upload --repository testpypi dist/*` 并输入 Token。
+
+### 34. batch 报错说明与修复
+> @terminals\4.txt:436-457 这是什么情况
+
+**执行结果**:
+- 说明：cmd 按系统代码页（如 GBK）读取 .bat，若文件为 UTF-8 则中文被误解析为多条命令，导致「'1'」「'清理'」等 not recognized。
+- 将 `publish_pypi.bat` 中所有中文改为英文（仅 ASCII），避免编码问题；修改文件：`publish_pypi.bat`。
+
+### 35. 400 Bad Request 原因说明
+> @terminals\4.txt:645-654 什么情况
+
+**执行结果**:
+- 说明：TestPyPI 已存在 unifiles-mcp 0.1.2，同一版本不可重复上传，故返回 400；之前某次上传已成功。
+- 建议：直接使用现有 0.1.2 或升版（如 0.1.3）后再构建上传。
+
+### 36. 更新 write-cursor-command SKILL
+> @SKILL.md 这个文件是否需要更新一下
+
+**执行结果**:
+- 「本项目中已有命令可作参考」与 `.cursor/commands/` 实际文件同步：移除不存在的 fix-and-verify、run-tests，新增 explain、publish-to-pypi、update-changelog 及简短说明。
+- 参考写法补充「错误处理」、文末增加「新增命令后建议同步更新本列表」。
+- 修改文件：`.cursor/skills/write-cursor-command/SKILL.md`。
+
+### 37. 执行 update-history
+> /update-history
+
+**执行结果**:
+- 在 `HISTORY.md` 末尾追加本轮对话记录（本条）。
+
+---
+
+## MCP 使用、mcp.json 修复与文件读取
+
+### 38. 读取 alumni.db 第一个表
+> 读取 temp\alumni.db 第一个表
+
+**执行结果**:
+- 调用 MCP `sqlite_inspect_database`，确认库内仅有一张表 `alumni`（15,997 行、20 列）；返回表结构及前 5 行预览（校友信息：姓名、年级、班级、单位、地区、联系方式等）。
+
+### 39. 解释 mcp.json 中的 cwd
+> /explain @.cursor/mcp.json:14  解释这里的 cwd
+
+**执行结果**:
+- 说明 `cwd` 为 Cursor 启动 unifiles-mcp 进程时的当前工作目录；用于在指定目录下解析 `unifiles-mcp.exe` 及相对路径；并提示可改为项目根以便 `temp/` 等路径正确解析。
+
+### 40. MCP 启动 ENOENT 错误与 mcp.json 修复
+> @anysphere.cursor-mcp.MCP project-0-unifiles-mcp-unifiles-mcp (7-21) @.cursor/mcp.json 这是什么问题
+
+**执行结果**:
+- 说明：仅写 `"command": "unifiles-mcp.exe"` 时，Cursor 按 PATH 查找可执行文件，`.venv\Scripts` 通常不在 PATH，导致「不是内部或外部命令」与 ENOENT。
+- 修改 `.cursor/mcp.json`：`command` 改为完整路径（`.venv/Scripts/unifiles-mcp.exe`），`cwd` 改为项目根，以便相对路径（如 `temp/alumni.db`）正确解析。
+
+### 41. 读取 test.xlsx 第一工作表
+> 读取 temp\test.xlsx 的 第一工作表
+
+**执行结果**:
+- 调用 MCP `excel_inspect_file` 获知首表为 Sheet1，再 `excel_read_sheet` 读取；返回 19 行×6 列（十届二次教代会提案汇总），并整理为表格摘要呈现。
+
+### 42. 执行 update-history
+> /update-history
+
+**执行结果**:
+- 在 `HISTORY.md` 末尾追加本轮对话记录（本条）。
+
+---
+
 ## 使用说明
 
 - 每条记录对应一次用户指令，引用块内为原始表述，其下为执行结果与涉及文件。

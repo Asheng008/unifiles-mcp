@@ -89,13 +89,14 @@ description: 根据用户需求编写 Cursor 的 slash command。遵循 Cursor �
 
 ## 本项目中已有命令可作参考
 
+- `explain.md`：解释/说明类命令（可按实际内容补充）。
+- `lint-and-format.md`：代码检查与格式化（ruff、black 等）。
+- `publish-to-pypi.md`：打包并发布到 TestPyPI 或正式 PyPI（前置检查、构建、twine 上传、错误处理）。
+- `update-changelog.md`：更新 CHANGELOG.md。
+- `update-history.md`：将当前对话中的用户指令追加到 HISTORY.md。
 - `update-readme.md`：按项目状态更新 README（版本、工具列表、结构、文档链接）。
-- `update-history.md`：将当前对话中的用户指令追加到 `history.md`。
-- `fix-and-verify.md`：修复问题后做静态检查与测试验证。
-- `run-tests.md`：在 Windows 下运行测试。
-- `lint-and-format.md`：代码检查与格式化。
 
-写作时可参考其「Overview + 步骤 + 约束 + Checklist」的写法，保持风格一致。
+写作时可参考其「目标/Overview + 步骤 + 环境约束 + 错误处理 + Checklist」的写法，保持风格一致。新增命令后建议同步更新本列表。
 
 ## 注意事项
 

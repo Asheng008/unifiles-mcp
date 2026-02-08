@@ -4,23 +4,25 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "unifiles-mcp"
-version = "0.1.2"
+version = "0.1.3"
 description = "MCP server for unifiles - unified file operations library. Provides Excel, PDF, Word, and SQLite file operations through Model Context Protocol."
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
 authors = [
-    {name = "unifiles-mcp contributors"}
+    {name = "Asheng", email = "w62745@qq.com"}
 ]
 keywords = ["mcp", "model-context-protocol", "file-operations", "excel", "pdf", "word", "sqlite"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
 ]
 
 dependencies = [
@@ -28,6 +30,15 @@ dependencies = [
     "pydantic>=2.0.0",
     "mcp[cli]>=1.26.0,<2.0.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/Asheng008/unifiles-mcp"
+Documentation = "https://github.com/Asheng008/unifiles-mcp"
+Repository = "https://github.com/Asheng008/unifiles-mcp"
+Issues = "https://github.com/Asheng008/unifiles-mcp/issues"
+
+[project.scripts]
+unifiles-mcp = "unifiles_mcp.main:run"
 
 [project.optional-dependencies]
 dev = [
