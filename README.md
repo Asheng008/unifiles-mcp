@@ -70,7 +70,35 @@ if __name__ == "__main__":
 
 ### 使用 MCP 客户端连接
 
-服务器启动后，可以通过 MCP 客户端（如 Claude Desktop）连接使用。
+服务器启动后，可通过 MCP 客户端连接使用。以下为常见客户端的配置方式。
+
+#### Cursor
+
+在项目或用户配置的 `.cursor/mcp.json` 中加入（使用 PyPI 已发布包，需已安装 [uv](https://docs.astral.sh/uv/)）：
+
+```json
+{
+  "mcpServers": {
+    "unifiles-mcp": {
+      "command": "uvx",
+      "args": ["unifiles-mcp"]
+    }
+  }
+}
+```
+
+使用本地开发环境时，可改为指定 venv 中的 Python 与模块（将 `D:\path\to\unifiles-mcp` 替换为你的项目根目录）：
+
+```json
+"unifiles-mcp": {
+  "command": "D:\\path\\to\\unifiles-mcp\\.venv\\Scripts\\python.exe",
+  "args": ["-m", "unifiles_mcp.main"]
+}
+```
+
+#### Claude Desktop / 其他 MCP 客户端
+
+在客户端的 MCP 配置文件中添加上述 `command` 与 `args`（或对应客户端的等价配置），指向 `unifiles-mcp` 或 `python -m unifiles_mcp.main` 即可。具体配置路径请参考各客户端的 MCP 文档。
 
 ### 使用示例
 

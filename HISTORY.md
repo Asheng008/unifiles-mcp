@@ -329,6 +329,87 @@
 
 ---
 
+## 类型注解说明、PyPI 发布、编码与 README MCP 配置
+
+### 43. 参数类型注解意义与 MCP SDK 支持
+> @src/unifiles_mcp/tools/excel.py:123-139 这些参数使用类型注解的意义在哪里，mcp sdk 支持这些类型注解吗
+
+**执行结果**:
+- 说明类型注解（str/int/bool）用于生成工具 JSON Schema；`Annotated[T, Field(description="...")]` 用于参数描述，供 LLM/客户端展示。
+- 确认 MCP SDK（func_metadata + Pydantic create_model）支持并会读取 Field 元数据写入 schema。
+- 未改文件。
+
+### 44. Pydantic 是否为提倡用法
+> 那就是说 使用pydantic 是提倡的用法？
+
+**执行结果**:
+- 确认：用 `Annotated[T, Field(description="...")]` 写参数描述为项目与 SDK 提倡；不提倡用单个 BaseModel 包住所有参数，应平铺传参。
+- 未改文件。
+
+### 45. 发布到正式 PyPI
+> /publish-to-pypi
+
+**执行结果**:
+- 检查版本 0.1.3、LICENSE、README 等前置条件；安装 build/twine；清理 dist 并执行 `python -m build`；首次上传因 Windows 控制台 GBK 与 rich 进度条冲突报错。
+- 设置 `$env:PYTHONIOENCODING='utf-8'` 后重试，成功上传至正式 PyPI；产物：`unifiles_mcp-0.1.3.tar.gz`、`unifiles_mcp-0.1.3-py3-none-any.whl`。
+- 提供项目页与安装命令。
+
+### 46. PYTHONIOENCODING 作用
+> $env:PYTHONIOENCODING='utf-8' 是什么作用
+
+**执行结果**:
+- 说明该环境变量让 Python 的 stdin/stdout/stderr 使用 UTF-8 编码，避免在 GBK 控制台下输出非 ASCII（如 twine/rich 字符）时出现 UnicodeEncodeError。
+- 未改文件。
+
+### 47. 是否建议全局设置 PYTHONIOENCODING
+> $env:PYTHONIOENCODING='utf-8' 是否建议全局设置
+
+**执行结果**:
+- 不建议全局设置；建议按需在当次会话或发布脚本中设置，避免影响依赖系统编码的旧程序及不同环境差异。
+- 未改文件。
+
+### 48. 在 publish_pypi.bat 中写入 PYTHONIOENCODING（CMD）
+> $env:PYTHONIOENCODING='utf-8' 写入 @publish_pypi.bat ，注意它是cmd命令
+
+**执行结果**:
+- 在 `chcp 65001` 后添加 `set PYTHONIOENCODING=utf-8` 及注释，供 CMD 下 twine 上传时避免编码错误。
+- 修改文件：`publish_pypi.bat`。
+
+### 49. AGENTS.md 是否加 PYTHONIOENCODING 提示
+> @AGENTS.md:21-28 这里是否需要 加 $env:PYTHONIOENCODING='utf-8' 这个提示或建议
+
+**执行结果**:
+- 未加在「Python & Pip 执行铁律」；在「编码安全」小节增加按需设置 `$env:PYTHONIOENCODING='utf-8'` 的说明及「勿全局设置」提示。
+- 修改文件：`AGENTS.md`。
+
+### 50. mcp.json 配置是否正确（PyPI 包）
+> @.cursor/mcp.json:11-15 这样写是否正确，unifiles-mcp 已经发布为 pypi 包了
+
+**执行结果**:
+- 确认正确：`uvx run unifiles-mcp` 会使用 PyPI 包并执行 `unifiles_mcp.main:run`；说明若用本地开发环境可改为 venv 的 python `-m unifiles_mcp.main`。
+- 未改文件。
+
+### 51. 读取 test2.xlsx 第一工作表
+> 读一下 temp\test2.xlsx 这个文件的第一个工作表
+
+**执行结果**:
+- 调用 MCP `excel_read_sheet`，成功返回 23 行数据（年级、歌曲名、表演者），并整理为表格摘要。
+
+### 52. README 是否写 MCP 配置及单独文档
+> @README.md 当前 readme 没有关于 mcp 的配置相关文档，是否需要单独写一个还是直接写在 readme 里面 @.cursor/mcp.json:11-14
+
+**执行结果**:
+- 建议直接写在 README 中；在「使用 MCP 客户端连接」下新增 Cursor（uvx + 本地 venv 示例）与 Claude Desktop/其他客户端说明。
+- 修改文件：`README.md`。
+
+### 53. 执行 update-history
+> /update-history
+
+**执行结果**:
+- 在 `HISTORY.md` 末尾追加本轮对话记录（本条）。
+
+---
+
 ## 使用说明
 
 - 每条记录对应一次用户指令，引用块内为原始表述，其下为执行结果与涉及文件。

@@ -6,6 +6,8 @@ cd /d "%~dp0"
 
 rem UTF-8 for console output
 chcp 65001 >NUL
+rem Python stdin/stdout/stderr use UTF-8 (avoids twine/rich encoding errors on Windows)
+set PYTHONIOENCODING=utf-8
 
 echo ===============================
 echo unifiles-mcp - Publish to PyPI

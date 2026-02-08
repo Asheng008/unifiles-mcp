@@ -9,9 +9,8 @@
       ]
     },
     "unifiles-mcp": {
-      "command": "D:/git_project/01-MyProject/unifiles-series/unifiles-mcp/.venv/Scripts/unifiles-mcp.exe",
-      "args": [],
-      "cwd": "D:/git_project/01-MyProject/unifiles-series/unifiles-mcp"
+      "command": "uvx",
+      "args": ["unifiles-mcp"]
     }
   }
 }

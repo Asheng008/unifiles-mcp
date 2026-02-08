@@ -29,6 +29,8 @@
 - **编码安全**:
   - 为防止中文乱码，执行输出相关的命令前建议预置: 
     `[Console]::OutputEncoding=[System.Text.UTF8Encoding]::UTF8; chcp 65001`
+  - 若 Python 子进程输出含非 ASCII（如 twine/rich 进度条）导致 `UnicodeEncodeError`，可在当次会话先设: 
+    `$env:PYTHONIOENCODING='utf-8'`（仅建议按需使用，勿全局设置）。
 
 
 ## 3. 工具体系与调用策略 (Tools & Strategy)
